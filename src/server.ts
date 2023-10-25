@@ -18,7 +18,6 @@ import GetLearningEvaluateListeningEvent from "./listeningevents/GetLearningEval
 import GetStatsBreakdownListeningEvent from "./listeningevents/GetStatsBreakdownListeningEvent";
 import GetStatsStatusListeningEvent from "./listeningevents/GetStatsStatusListeningEvent";
 import GetLearningStatusListeningEvent from "./listeningevents/GetLearningStatusListeningEvent";
-import GetAidboxInfoListeningEvent from "./listeningevents/GetAidboxInfoListeningEvent";
 
 import version from "./utils/version";
 
@@ -50,5 +49,4 @@ WebSocketAdapter.registerListeningEvents([
   new GetLearningEvaluateListeningEvent(),
   new GetLearningStatusListeningEvent(),
   new GetStatsStatusListeningEvent(),
-  new GetAidboxInfoListeningEvent(),
 ]);
