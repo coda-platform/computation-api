@@ -59,11 +59,6 @@ async function getResources(): Promise<ResourceInfo[]> {
     return data?.resources as ResourceInfo[];
 }
 
-async function getAidboxInfo(): Promise<any> {
-    const response = await axios.get(`${process.env.CODA_STATS_API_URL}/resources/health`);
-    return response.data;
-}
-
 export default {
-    getSiteInfo, getAidboxInfo
+    getSiteInfo
 }
