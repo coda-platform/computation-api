@@ -3,6 +3,20 @@ import version from "../utils/version";
 
 const learningApiUrl = process.env.CODA_LEARNING_API_URL;
 
+async function getAPIStatus() {
+    const uri = `${process.env.CODA_LEARNING_API_URL}/`;
+
+    try {
+        const response = await axios.get(uri);
+        const data = response.data ? response.data : response;
+
+        return data;
+    }
+    catch (error) {
+        return getLearningErrorProcessed('/', error);
+    }
+}
+
 function getLearningErrorProcessed(action: string, error: any) {
     const learningApiConnectionFailure = `Could not receive or parse response from learning api url ${learningApiUrl}`;
 
@@ -65,5 +79,6 @@ async function evaluate(payload: any): Promise<any> {
 export default {
     prepare,
     train,
-    evaluate
+    evaluate,
+    getAPIStatus
 }

@@ -3,6 +3,20 @@ import version from "../utils/version";
 
 const statsApiUrl = process.env.CODA_STATS_API_URL;
 
+async function getAPIStatus(): Promise<any> {
+    try {
+        const uri = `${process.env.CODA_STATS_API_URL}/`;
+
+        const response = await axios.get(uri);
+        const data = response.data ? response.data : response;
+
+        return data;
+    }
+    catch (error) {
+        return getStatsErrorProcessed('/', error);
+    }
+}
+
 function getStatsErrorProcessed(action: string, error: any) {
     const statsApiConnectionFailure = `Could not receive or parse response from stats api url ${statsApiUrl}`;
 
@@ -46,5 +60,5 @@ async function breakdown(payload: any): Promise<any> {
 }
 
 export default {
-    summarize, breakdown
+    summarize, breakdown, getAPIStatus
 }
