@@ -19,7 +19,7 @@ async function emit(event: string, eventId: string, ...args: any[]) {
     const token = await KeycloakApi.logIn();
     const result = { token, clientId: socket.id, eventId, siteCode, ...args[0] };
 
-    console.warn(result);
+    console.warn(`⚡️[coda-site-api]: Emitting ${event} event.`);
     socket.emit(event, result);
 }
 
