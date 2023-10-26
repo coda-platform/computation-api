@@ -15,4 +15,4 @@ RUN npm install dotenv
 RUN npm install pm2 -g
 
 EXPOSE 5418
-CMD ["pm2-runtime","dist/server.js"]
+CMD ["pm2-runtime","dist/server.js", "--node-args=\"--max-old-space-size=8192\""]
