@@ -1,11 +1,11 @@
 import axios from "axios";
 import version from "../utils/version";
 
-const statsApiUrl = process.env.CODA_STATS_API_URL;
+const statsApiUrl = process.env.CODA_STATS_API_URL ? process.env.CODA_STATS_API_URL : process.env.CODA19_SITE_API_STATS_API_ENDPOINT;
 
 async function getAPIStatus(): Promise<any> {
     try {
-        const uri = `${process.env.CODA_STATS_API_URL}/`;
+        const uri = `${statsApiUrl}/`;
 
         const response = await axios.get(uri);
         const data = response.data ? response.data : response;
@@ -33,7 +33,7 @@ function getStatsErrorProcessed(action: string, error: any) {
 
 async function summarize(payload: any): Promise<any> {
     try {
-        const uri = `${process.env.CODA_STATS_API_URL}/stats/summarize`;
+        const uri = `${statsApiUrl}/stats/summarize`;
 
         const response = await axios.post(uri, payload);
         const data = response.data ? response.data : response;
@@ -47,7 +47,7 @@ async function summarize(payload: any): Promise<any> {
 
 async function breakdown(payload: any): Promise<any> {
     try {
-        const uri = `${process.env.CODA_STATS_API_URL}/stats/summarizeBreakdown`;
+        const uri = `${statsApiUrl}/stats/summarizeBreakdown`;
 
         const response = await axios.post(uri, payload);
         const data = response.data ? response.data : response;

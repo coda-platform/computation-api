@@ -1,5 +1,6 @@
 function getPurpleVMRestEndpoint(endPoint: string) {
-    return `${process.env.CODA_HUB_API_URL}/${endPoint}`;
+    const hubApiURL = process.env.CODA_HUB_API_URL ? process.env.CODA_HUB_API_URL : process.env.CODA19_SITE_API_HUB_API_URL;
+    return `${hubApiURL}/${endPoint}`;
 }
 
 export default {

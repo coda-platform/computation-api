@@ -2,7 +2,7 @@ import HospitalInfo from "../models/HospitalInfo";
 import RandomGenerator from "../utils/RandomGenerator";
 
 function getHospitalInfo(): HospitalInfo {
-    const hospitalNumberEnvVariable = process.env.CODA_SITE_API_HOSPITAL_CODE as string;
+    const hospitalNumberEnvVariable = process.env.CODA_SITE_API_HOSPITAL_CODE ? process.env.CODA_SITE_API_HOSPITAL_CODE : process.env.CODA19_SITE_API_HOSPITAL_CODE as string;
     const hospitalNumber = hospitalNumberEnvVariable ? hospitalNumberEnvVariable : '110';
 
     const positiveTests = RandomGenerator.getRandomInt(5000);

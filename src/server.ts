@@ -33,7 +33,7 @@ app.use(bodyParser.json());
 app.use('/', router);
 
 // start the server
-var port = process.env.CODA_SITE_API_SERVER_PORT;
+var port = process.env.CODA_SITE_API_SERVER_PORT ? process.env.CODA_SITE_API_SERVER_PORT : process.env.CODA19_SITE_API_SERVER_PORT;
 app.listen(port, function () {
   console.log(`⚡️[coda-site-api]: Server is running at http://localhost:${port}`);
   console.log(`⚡️[coda-site-api]: Running ${version.getBuildVersion()} version of build`);

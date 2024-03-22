@@ -4,7 +4,7 @@ import WebSocketEventListener from './WebSocketEventListener';
 
 const socket = SocketIoFactory.get();
 
-const siteCode = process.env.CODA_SITE_API_HOSPITAL_CODE;
+const siteCode = process.env.CODA_SITE_API_HOSPITAL_CODE ? process.env.CODA_SITE_API_HOSPITAL_CODE : process.env.CODA19_SITE_API_HOSPITAL_CODE;
 
 socket.on("connect", function () {
     console.log('Connected to web socket server.');

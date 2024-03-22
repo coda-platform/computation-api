@@ -8,6 +8,8 @@ interface Dictionary<T> {
     [Key: string]: T;
 }
 
+const statsApiUrl = process.env.CODA_STATS_API_URL ? process.env.CODA_STATS_API_URL : process.env.CODA19_SITE_API_STATS_API_ENDPOINT;
+
 function mockResource(type: string, attribute: string, datatype: string): ResourceInfo {
     const begin_date: Date = new Date(2020, 0, 1);
     const end_date: Date = new Date(2021, 0, 1);
@@ -22,9 +24,9 @@ function mockResource(type: string, attribute: string, datatype: string): Resour
 }
 
 export async function getSiteInfo(): Promise<SiteInfo> {
-    console.log('Get site info at ', process.env.CODA_STATS_API_URL);
+    console.log('Get site info at ', statsApiUrl);
 
-    const hospitalNumberEnvVariable = process.env.CODA_SITE_API_HOSPITAL_CODE as string;
+    const hospitalNumberEnvVariable = process.env.CODA_SITE_API_HOSPITAL_CODE ? process.env.CODA_SITE_API_HOSPITAL_CODE : process.env.CODA19_SITE_API_HOSPITAL_CODE as string;
     const hospitalNumber = hospitalNumberEnvVariable ? hospitalNumberEnvVariable : '110';
 
     const uid: string = hospitalNumber;
@@ -33,7 +35,7 @@ export async function getSiteInfo(): Promise<SiteInfo> {
     const name: string = names['en'];
     const api_version: string = "1.0.1";
 
-    const resources = await (process.env.CODA_STATS_API_URL ? getResources : getMockedResources)();
+    const resources = await (statsApiUrl ? getResources : getMockedResources)();
 
     return {
         uid,
@@ -53,14 +55,14 @@ async function getMockedResources(): Promise<ResourceInfo[]> {
 }
 
 async function getResources(): Promise<ResourceInfo[]> {
-    const response = await axios.get(`${process.env.CODA_STATS_API_URL}/resources`);
+    const response = await axios.get(`${statsApiUrl}/resources`);
     const data = response.data;
 
     return data?.resources as ResourceInfo[];
 }
 
 async function getAidboxInfo(): Promise<any> {
-    const response = await axios.get(`${process.env.CODA_STATS_API_URL}/resources/health`);
+    const response = await axios.get(`${statsApiUrl}/resources/health`);
     return response.data;
 }
 

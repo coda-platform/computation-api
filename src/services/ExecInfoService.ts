@@ -6,13 +6,15 @@ import ExecInfo from "../models/ExecInfo";
 import ExecRes from "../models/ExecRes";
 import ExecQuery from "../models/ExecQuery";
 
+const statsApiUrl = process.env.CODA_STATS_API_URL ? process.env.CODA_STATS_API_URL : process.env.CODA19_SITE_API_STATS_API_ENDPOINT;
+
 export async function getExecInfo(query: ExecQuery): Promise<ExecInfo> {
-    const hospitalNumberEnvVariable = process.env.CODA_SITE_API_HOSPITAL_CODE as string;
+    const hospitalNumberEnvVariable = process.env.CODA_SITE_API_HOSPITAL_CODE ? process.env.CODA_SITE_API_HOSPITAL_CODE : process.env.CODA19_SITE_API_HOSPITAL_CODE as string;
     const hospitalNumber = hospitalNumberEnvVariable ? hospitalNumberEnvVariable : '110';
     const uid: string = hospitalNumber;
     const api_version: string = "1.0.1";
 
-    const execRes = await (process.env.CODA_STATS_API_URL ? getExec : getMockedExec)(query);
+    const execRes = await (statsApiUrl ? getExec : getMockedExec)(query);
     const command = execRes.command;
     const resource = execRes.resource;
     const value = execRes.value;
@@ -27,9 +29,9 @@ export async function getExecInfo(query: ExecQuery): Promise<ExecInfo> {
 }
 
 async function getExec(query: ExecQuery): Promise<ExecRes> {
-    console.log('Fetching details from the Site-API at ', process.env.CODA_STATS_API_URL);
+    console.log('Fetching details from the Site-API at ', statsApiUrl);
 
-    const response = await axios.get(`${process.env.CODA_STATS_API_URL}/exec?cmd=${query.command}&resourceType=${query.resType}&resourceAttribute=${query.resAttribute}`);
+    const response = await axios.get(`${statsApiUrl}/exec?cmd=${query.command}&resourceType=${query.resType}&resourceAttribute=${query.resAttribute}`);
 
     return response.data as ExecRes;
 }
